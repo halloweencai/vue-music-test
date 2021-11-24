@@ -9,5 +9,12 @@ module.exports = {
         `
       }
     }
+  },
+  // 使用node-server
+  devServer: {
+    // app是express的实例
+    before(app) {
+      registerRouter(app)
+    }
   }
 }

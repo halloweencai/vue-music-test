@@ -23,14 +23,24 @@
 </template>
 
 <script>
-import BScroll from '@better-scroll/core'
-import Slide from '@better-scroll/slide'
-BScroll.use(Slide)
+import { ref } from 'vue'
+import useSlider from './use-sliders'
 export default {
-  data() {
+  name: 'slider',
+  props: {
+    sliders: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
+  },
+  setup() {
+    const rootRef = ref(null)
+    const { currentPageIndex } = useSlider(rootRef)
     return {
-      nums: 4,
-      currentPageIndex: 0
+      rootRef,
+      currentPageIndex
     }
   }
 }

@@ -1,9 +1,9 @@
-import BScroll from '@better-scroll/core'
+import BScroll from '@better-scroll/core'  // 核心滚动
 import Slide from '@better-scroll/slide'
 
 import { onMounted, onUnmounted, onActivated, onDeactivated, ref } from 'vue'
 
-BScroll.use(Slide)
+BScroll.use(Slide)  // 注册插件
 
 export default function useSlider(wrapperRef) {
   // 初始化
@@ -11,31 +11,25 @@ export default function useSlider(wrapperRef) {
   const currentPageIndex = ref(0)
 
   onMounted(() => {
+    // wrapperRef.value是实际dom对象
     const sliderVal = slider.value = new BScroll(wrapperRef.value, {
-
+      click: true,
+      scrollX: true,
+      scrollY: false,
+      momentum: false,
+      bounce: false,
+      probeType: 2,
+      slide: true
     })
-
+    sliderVal.on('sliderWillChange', (page) => {
+      currentPageIndex.value = page.pageX
+    })
   })
-  this.slide = new BScroll(this.$refs.slide, {
-    scrollX: true,
-    scrollY: false,
-    slide: true,
-    momentum: false,
-    bounce: false,
-    probeType: 0
+  onUnmounted(() => {
+    slider.value.destroy()
   })
-  this.slide.on('scrollEnd', this._onScrollEnd)
-
-  this.slide.on('slideWillChange', (page) => {
-    this.currentPageIndex = page.pageX
-  })
-
-  // v2.1.0
-  this.slide.on('slidePageChanged', (page) => {
-    console.log('CurrentPage changed to => ', page)
-  })
-},
-_onScrollEnd () {
-  console.log('CurrentPage => ', this.slide.getCurrentPage())
-}
+  return {
+    slider,
+    currentPageIndex
+  }
 }
