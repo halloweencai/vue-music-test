@@ -1,9 +1,9 @@
-import BScroll from '@better-scroll/core'  // 核心滚动
+import BScroll from '@better-scroll/core' // 核心滚动
 import Slide from '@better-scroll/slide'
 
-import { onMounted, onUnmounted, onActivated, onDeactivated, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 
-BScroll.use(Slide)  // 注册插件
+BScroll.use(Slide) // 注册插件
 
 export default function useSlider(wrapperRef) {
   // 初始化
@@ -11,17 +11,18 @@ export default function useSlider(wrapperRef) {
   const currentPageIndex = ref(0)
 
   onMounted(() => {
+    debugger
     // wrapperRef.value是实际dom对象
     const sliderVal = slider.value = new BScroll(wrapperRef.value, {
       click: true,
       scrollX: true,
       scrollY: false,
       momentum: false,
-      bounce: false,
+      bounce: false, // 小段回弹动画，要设置为 false，否则会在循环衔接的时候出现闪烁
       probeType: 2,
       slide: true
     })
-    sliderVal.on('sliderWillChange', (page) => {
+    sliderVal.on('slideWillChange', (page) => {
       currentPageIndex.value = page.pageX
     })
   })

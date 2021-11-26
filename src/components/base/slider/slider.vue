@@ -25,6 +25,7 @@
 <script>
 import { ref } from 'vue'
 import useSlider from './use-sliders'
+
 export default {
   name: 'slider',
   props: {
@@ -38,6 +39,7 @@ export default {
   setup() {
     const rootRef = ref(null)
     const { currentPageIndex } = useSlider(rootRef)
+
     return {
       rootRef,
       currentPageIndex
@@ -47,43 +49,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.slide-banner {
-  .banner-wrapper {
+.slider {
+  min-height: 1px;
+  font-size: 0;
+  touch-action: pan-y;
+  .slider-group {
     position: relative;
-  }
-  .slide-banner-wrapper {
-    min-height: 1px;
-    overflow: hidder;
-  }
-  .slide-banner-content {
-    height: 200px;
+    overflow: hidden;
     white-space: nowrap;
-    font-size: 0;
-    .slide-page {
+    .slider-page {
       display: inline-block;
-      height: 200px;
-      width: 100%;
-      line-height: 200px;
-      text-align: center;
-      font-size: 26px;
-      &.page1 {
-        background-color: #95B8D1;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      a {
+        display: block;
+        width: 100%;
       }
-      &.page2 {
-        background-color: #DDA789;
-      }
-      &.page3 {
-        background-color: #C3D899;
-      }
-      &.page4 {
-        background-color: #F2D4A7;
+      img {
+        display: block;
+        width: 100%;
       }
     }
   }
   .dots-wrapper {
     position: absolute;
-    bottom: 4px;
     left: 50%;
+    bottom: 12px;
+    line-height: 12px;
     transform: translateX(-50%);
     .dot {
       display: inline-block;
@@ -91,10 +83,11 @@ export default {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #eee;
+      background: $color-text-l;
       &.active {
         width: 20px;
         border-radius: 5px;
+        background: $color-text-ll;
       }
     }
   }
