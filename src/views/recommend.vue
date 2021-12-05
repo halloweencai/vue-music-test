@@ -7,6 +7,17 @@
             <slider v-if="sliders.length" :sliders="sliders"></slider>
           </div>
         </div>
+        <div class="recommend-list">
+          <h1 class="list-title">热门歌单推荐</h1>
+          <ul>
+            <li
+              v-for="item in albums"
+              class="item"
+              :key="item.id"
+            >
+            </li>
+          </ul>
+        </div>
       </div>
     <!-- </scroll> -->
   </div>
@@ -34,18 +45,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.slider-wrapper {
-  position: relative;
+.recommend {
+  
+  position: fixed;
   width: 100%;
-  height: 0;
-  padding-top: 40%;
-  overflow: hidden;
-  .slider-content {
-    position: absolute;
-    left: 0;
-    top: 0;
+  top: 88px;
+  .slider-wrapper {
+    position: relative;
     width: 100%;
-    height: 100%;
+    height: 0;
+    padding-top: 40%;
+    overflow: hidden;
+    .slider-content {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 </style>
